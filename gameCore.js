@@ -37,9 +37,12 @@ function Player(name){
 }
 Player.prototype.takeCard = function(){
         var shiftedCard = myDeck.shift();
+        if (shiftedCard) {
         this.playerDeck.push(shiftedCard);
-        //console.log(this.playerDeck);
+        return shiftedCard;
+        };
     };
+
 
 var player1 = new Player('player1');
 var player2 = new Player('player2');
@@ -48,3 +51,16 @@ var player4 = new Player('player4');
 
 var playersArr = [player1, player2, player3, player4];
 
+var takenCard, turn = 0;
+
+while (takenCard = playersArr[turn % playersArr.length].takeCard()) {
+  if (takenCard.value > 10) {
+    console.log(takenCard.name, takenCard.suit, 'take one more');
+    continue;
+  } else {
+    console.log(takenCard.name, takenCard.suit, 'give turn to the next player');
+    turn++;
+  }
+}
+
+console.log(player1.playerDeck);
